@@ -1,0 +1,15 @@
+body {
+    background-color: rgb(27, 25, 36);
+    color: #fff;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#text-input {
+    height: 200px;
+    width: 500px;
+    margin: 10px 0px;
+}
+
+input {
+    font-size: 18px;
+}
