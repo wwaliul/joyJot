@@ -21,7 +21,7 @@ const fromInputFieldEl = document.getElementById("from-input")
 const toInputFieldEl = document.getElementById("to-input")
 
 onValue(postsInDB, function(snapshot){
-    let postArray = Object.values(snapshot.val())
+    let postArray = Object.entries(snapshot.val())
     
     clearListEl()
 
@@ -30,34 +30,62 @@ onValue(postsInDB, function(snapshot){
     
         pushToList(currentPost)
     }
-    let fromValueSnapshot = JSON.stringify(snapshot.val().from)
-    console.log(fromValueSnapshot)
 })
 
-
-
 btnEl.addEventListener("click", function(){
-    let inputValue = inputFieldEl.value
-    // postEntries.message = inputFieldEl.value
-    // postEntries.to = toInputFieldEl.value
-    // postEntries.from = fromInputFieldEl.value
-    let arr = [inputValue, inputValue]
+    const inputValue = inputFieldEl.value
+    const fromValue = fromInputFieldEl.value
+    const toValue = toInputFieldEl.value
 
-    push(postsInDB, arr)
+    let arr = [inputValue, fromValue, toValue]
+    
+    pushToDb(arr)
 
-    // push(postsInDB, {
-    //     to : postEntries.to,
-    //     from : postEntries.from,
-    //     message : postEntries.message
-    // })
-    
-    console.log(`${inputValue} has been pushed to the database`)
-    
     clearFieldEl()
 })
 
+function pushToDb(item){
+    push(postsInDB, item)
+}
+
 function pushToList(value) {
-    listEl.innerHTML += `<li>${value}</li>`
+    let postId = value[0]
+    let postData = value[1]
+    let postText = postData[0]
+    let postFrom = postData[1]
+    let postTo = postData[2]
+
+    let newListEl = document.createElement("li")
+    let newListId = newListEl.setAttribute("id", "post-cards")
+
+    let mainDivEl = document.createElement("div")
+    let toEl = document.createElement("h3")
+    let textEl = document.createElement("p")
+    let fromEl = document.createElement("h3")
+
+    fromEl.textContent = `From ${postFrom}`
+    toEl.textContent = `To ${postTo}`
+    textEl.textContent = postText
+
+    newListEl.appendChild(mainDivEl)
+    mainDivEl.appendChild(toEl)
+    mainDivEl.appendChild(textEl)
+    mainDivEl.appendChild(fromEl)
+
+    listEl.append(newListEl)
+
+    console.log(newListEl)
+
+    // listEl.innerHTML += `<li>
+    // <div>
+    // To ${postTo}
+    // <br>
+    // ${postText}
+    // <br>
+    // From ${postFrom}
+    // </div>
+    // <button>Like</button>
+    // </li>`
 }
 
 function clearListEl(){
@@ -66,4 +94,6 @@ function clearListEl(){
 
 function clearFieldEl(){
     inputFieldEl.value = ""
+    fromInputFieldEl.value = "" 
+    toInputFieldEl.value = "" 
 }
