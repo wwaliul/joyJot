@@ -13,3 +13,8 @@ body {
 input {
     font-size: 18px;
 }
+
+#post-lists { 
+    display: flex;
+    flex-direction: column-reverse;
+}
