@@ -2,27 +2,46 @@
     <html>
         <head>
             <title>JoyJot</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+            <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+            <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+            <link rel="manifest" href="/site.webmanifest">
+
             <link rel="stylesheet" href="style.css">
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
             <script type="module" src="index.js"></script>
         </head>
         <body>
-            <div>
-                <h1> <span>📌</span> JoyJot - Endorsement Board </h1>
-                <p>Jot a joyful message and bring a smile to faces.</p>
-            </div>
-
-            <div>
-                <input id="text-input" type="text" placeholder="Write your here message here">
-            </div>
-            <div>
-                <input id="from-input" type="text" placeholder="From">
-                <input id="to-input" type="text" placeholder="To">
-                <button id="publish-button">Publish</button>
-            </div>
-            <div>
-                <h1>Posts</h1>
-                <ul id="post-lists">
-                </ul>
+            <div id="main-content">
+                <div>
+                    <h1>JoyJot</h1>
+                    <p class="ta-center">Jot a joyful message and bring a smile to faces.</p>
+                </div>
+                
+                <div id="input-container">
+                    <div>
+                        <textarea id="text-input" name="text-input" rows="3" cols="50" placeholder="Type something here" maxlength="400"></textarea>
+                        <!-- <input id="text-input" type="text" placeholder="Write your here message here"> -->
+                    </div>
+                    <div class="flex-space-even">
+                        <input id="from-input" type="text" placeholder="From">
+                        <input id="to-input" type="text" placeholder="To">
+                        <button id="publish-button">Publish</button>
+                    </div>
+                </div>
+                    
+                <div>
+                    <h1><span class="material-symbols-outlined">
+                        sticky_note
+                        </span> Posts</h1>
+                    <ul id="post-lists">
+                    </ul>
+                </div>
             </div>
         </body>
     </html>

@@ -11,6 +11,9 @@ const appSettings = {
     databaseURL: "https://realtime-database-e961b-default-rtdb.europe-west1.firebasedatabase.app/"
 }
  
+let currentDate = new Date().toDateString()
+console.log(currentDate)
+
 const app = initializeApp(appSettings)
 const database = getDatabase(app)
 const postsInDB = ref(database, "posts")
@@ -79,20 +82,23 @@ function pushToList(value) {
     // tagging id to the respective elements using .setAttribute - "id"
     let newListId = newListEl.setAttribute("id", "post-cards")
     let likeBtnId = likeBtnEl.setAttribute("id", "like-btn")
-    
+    let mainDivId = mainDivEl.setAttribute("id", "mainCardDiv")
+
+
     // Assigning value to elements
     fromEl.textContent = `From ${postFrom}`
     toEl.textContent = `To ${postTo}`
     textEl.textContent = postText
-    likeBtnEl.textContent = "Like"
-    likeCountEl.textContent = likeData
+    likeBtnEl.textContent = `❤️ ${likeData}`
+    // likeCountEl.textContent = `❤️ ${likeData}`
 
     // Appending / Nesting Elements
     newListEl.appendChild(mainDivEl)
     mainDivEl.appendChild(toEl)
     mainDivEl.appendChild(textEl)
-    mainDivEl.appendChild(likeBtnEl)
     mainDivEl.appendChild(fromEl)
+    mainDivEl.appendChild(likeBtnEl)
+    // mainDivEl.appendChild(likeCountEl)
 
     listEl.append(newListEl)
 
@@ -103,12 +109,18 @@ function pushToList(value) {
         update(exactLocationInDb, {
             3: likeData,
         })
-        console.log(likeData)
-
     })
-    console.log(newListEl)
 
+    // likeBtnEl.addEventListener("dblclick", function(){
+    //     likeData -= 1 
+    //     let exactLocationInDb = ref(database, `posts/${postId}`)
+    //     update(exactLocationInDb, {
+    //         3: likeData,
+    //     })
+    // })
 }
+
+
 
 
 function clearListEl(){
