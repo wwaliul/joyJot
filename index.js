@@ -4,7 +4,8 @@ import {
     ref, 
     push, 
     onValue,
-    update } 
+    update,
+    remove } 
     from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
 
 const appSettings = { 
@@ -23,6 +24,8 @@ const btnEl = document.getElementById("publish-button")
 const listEl = document.getElementById("post-lists")
 const fromInputFieldEl = document.getElementById("from-input")
 const toInputFieldEl = document.getElementById("to-input")
+
+const mainCardEl = document.getElementById("mainCardDiv")
 
 onValue(postsInDB, function(snapshot){
     let postArray = Object.entries(snapshot.val())
@@ -52,7 +55,7 @@ btnEl.addEventListener("click", function(){
         fromInputFieldEl.style.borderColor = "red"
         toInputFieldEl.style.borderColor = "red"
 
-        alert("Fill in the damn thing")
+        alert("Error: Please fill in the fields to submit")
     }
 })
 
@@ -76,6 +79,7 @@ function pushToList(value) {
     let toEl = document.createElement("h3")
     let textEl = document.createElement("p")
     let likeBtnEl = document.createElement("button")
+    let removeBtnEl = document.createElement("button")
     let likeCountEl = document.createElement("p")
     let fromEl = document.createElement("h3")
 
@@ -90,6 +94,7 @@ function pushToList(value) {
     toEl.textContent = `To ${postTo}`
     textEl.textContent = postText
     likeBtnEl.textContent = `❤️ ${likeData}`
+    removeBtnEl.textContent = "X"
     // likeCountEl.textContent = `❤️ ${likeData}`
 
     // Appending / Nesting Elements
@@ -98,29 +103,13 @@ function pushToList(value) {
     mainDivEl.appendChild(textEl)
     mainDivEl.appendChild(fromEl)
     mainDivEl.appendChild(likeBtnEl)
+    mainDivEl.appendChild(removeBtnEl)
     // mainDivEl.appendChild(likeCountEl)
 
     listEl.append(newListEl)
-
-
-    likeBtnEl.addEventListener("click", function(){
-        likeData += 1 
-        let exactLocationInDb = ref(database, `posts/${postId}`)
-        update(exactLocationInDb, {
-            3: likeData,
-        })
-    })
-
-    // likeBtnEl.addEventListener("dblclick", function(){
-    //     likeData -= 1 
-    //     let exactLocationInDb = ref(database, `posts/${postId}`)
-    //     update(exactLocationInDb, {
-    //         3: likeData,
-    //     })
-    // })
+    updateLikes(likeBtnEl, likeData, postId)
+    deletePosts(removeBtnEl, postId)
 }
-
-
 
 
 function clearListEl(){
@@ -131,4 +120,35 @@ function clearFieldEl(){
     inputFieldEl.value = ""
     fromInputFieldEl.value = "" 
     toInputFieldEl.value = "" 
+}
+
+function updateLikes(likeBtnEl, likeData, postId){
+    likeBtnEl.addEventListener("click", function(){
+        likeData += 1 
+        let exactLocationInDb = ref(database, `posts/${postId}`)
+        update(exactLocationInDb, {
+            3: likeData,
+        })
+    })
+
+    likeBtnEl.addEventListener("mousedown", function() {
+        setTimeout(function() {
+            likeData -= 1 
+            let exactLocationInDb = ref(database, `posts/${postId}`)
+            update(exactLocationInDb, {
+                3: likeData,
+            })
+        }, 4000)
+    })
+}
+
+function deletePosts(removeBtnEl, postId){
+    removeBtnEl.addEventListener("click", function() {
+        if (confirm('Are you sure you want to remove this post from the database?')) {
+            let exactLocationInDb = ref(database, `posts/${postId}`)
+            remove(exactLocationInDb)
+        } else {
+            alert("has been cancelled")
+        } 
+    })
 }
