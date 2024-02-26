@@ -134,6 +134,10 @@ button:hover {
     padding: 0%;
 }
 
+li {
+    flex: 1;
+}
+
 li div {
     /* display: flex;
     flex-direction: column; */
@@ -142,7 +146,14 @@ li div {
     min-width: 300px;
     border-radius: 10px;
     margin: 10px 10px 10px 0px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
 }
+
+#mainCardDiv:hover {
+    background-color: #0092bf;
+    color: #ffffff;
+    transition: 170ms ease-in;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;}
 
 li h3 {
     font-size: 1.4em;
@@ -177,5 +188,11 @@ hr {
 
     #mainCardDiv {
         margin: 10px 0px;
+    }
+
+    #nav-bar div {
+        gap: 0;
+        flex: 1;
+        margin: 10px;
     }
 }
