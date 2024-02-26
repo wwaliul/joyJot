@@ -31,13 +31,16 @@ onValue(postsInDB, function(snapshot){
     let postArray = Object.entries(snapshot.val())
     
     clearListEl()
+    displayArrayAsPosts(postArray)
+})
 
+function displayArrayAsPosts(postArray){
     for (let i = 0; i < postArray.length; i++) {
         let currentPost = postArray[i]
     
-        pushToList(currentPost)
+        appendToList(currentPost)
     }
-})
+}
 
 btnEl.addEventListener("click", function(){
     const inputValue = inputFieldEl.value
@@ -63,7 +66,7 @@ function pushToDb(item){
     push(postsInDB, item)
 }
 
-function pushToList(value) {
+function appendToList(value) {
     let postId = value[0]
     let postData = value[1]
     let postText = postData[0]
@@ -131,15 +134,15 @@ function updateLikes(likeBtnEl, likeData, postId){
         })
     })
 
-    likeBtnEl.addEventListener("mousedown", function() {
-        setTimeout(function() {
-            likeData -= 1 
-            let exactLocationInDb = ref(database, `posts/${postId}`)
-            update(exactLocationInDb, {
-                3: likeData,
-            })
-        }, 4000)
-    })
+    // likeBtnEl.addEventListener("mousedown", function() {
+    //     setTimeout(function() {
+    //         likeData -= 1 
+    //         let exactLocationInDb = ref(database, `posts/${postId}`)
+    //         update(exactLocationInDb, {
+    //             3: likeData,
+    //         })
+    //     }, 400)
+    // })
 }
 
 function deletePosts(removeBtnEl, postId){
